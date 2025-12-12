@@ -1,0 +1,40 @@
+{
+  "name": "playtory",
+  "version": "1.0.0",
+  "description": "A simple Inventory Application project submitted for The Odin Project course.",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc && cp -r src/views dist/views",
+    "build:css": "npx @tailwindcss/cli -i ./src/assets/styles.css -o ./public/styles.css",
+    "start": "node dist/server.js",
+    "dev": "nodemon --config nodemon.dev.json",
+    "dev:css": "npx @tailwindcss/cli -i ./src/assets/styles.css -o ./public/styles.css --watch",
+    "seed": "ts-node ./src/db/seed.ts"
+  },
+  "author": "Mark Kenneth Pelayo (mkgp-dev)",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "@tsconfig/node22": "^22.0.5",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/express-ejs-layouts": "^2.5.4",
+    "@types/node": "^25.0.0",
+    "@types/pg": "^8.16.0",
+    "daisyui": "^5.5.11",
+    "nodemon": "^3.1.11",
+    "tailwindcss": "^4.1.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-ejs-layouts": "^2.5.1",
+    "pg": "^8.16.3"
+  }
+}
