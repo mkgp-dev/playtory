@@ -1,0 +1,120 @@
+<% const isEdit=game && game.id; const statusOptions=["owned", "wishlist" , "completed" , "backlog" ]; %>
+    <section>
+        <div class="flex items-center justify-center min-h-[80vh]">
+            <div class="w-full max-w-lg">
+                <% if (errors && errors.length> 0) { %>
+                    <div role="alert" class="alert alert-error mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <ul class="list-disc list-inside space-y-1">
+                            <% errors.forEach(err=> { %>
+                                <li>
+                                    <%= err %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                    <% } %>
+                        <div class="card bg-slate-600">
+                            <div class="card-body">
+                                <h2 class="card-title font-heading">
+                                    <%= isEdit ? "Edit Game" : "Add Game" %>
+                                </h2>
+
+                                <form action="<%= isEdit ? '/games/' + game.id + '/edit' : '/games/create' %>"
+                                    method="POST">
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset-legend">Title</legend>
+                                        <input type="text" name="title" class="input outline-none w-full"
+                                            value="<%= game ? game.title : '' %>" />
+                                    </fieldset>
+
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset-legend">Genre</legend>
+                                        <select name="genre_id" class="select outline-none w-full">
+                                            <option value="">Select a genre</option>
+                                            <% genres.forEach(genre=> { %>
+                                                <option value="<%= genre.id %>" <%=game &&
+                                                    Number(game.genre_id)===genre.id ? "selected" : "" %>>
+                                                    <%= genre.name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </fieldset>
+
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset-legend">Developer</legend>
+                                        <select name="developer_id" class="select outline-none w-full">
+                                            <option value="">No developer</option>
+                                            <% developers.forEach(dev=> { %>
+                                                <option value="<%= dev.id %>" <%=game && game.developer_id &&
+                                                    Number(game.developer_id)===dev.id ? "selected" : "" %>
+                                                    >
+                                                    <%= dev.name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </fieldset>
+
+                                    <div class="grid md:grid-cols-2 gap-2">
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset-legend">Platform</legend>
+                                            <input type="text" name="platform" class="input outline-none w-full"
+                                                value="<%= game ? game.platform : '' %>" />
+                                        </fieldset>
+
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset-legend">Released year</legend>
+                                            <input type="number" name="release_year"
+                                                class="input outline-none w-full [appearance:textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                                                value="<%= game && game.release_year ? game.release_year : '' %>" />
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="grid md:grid-cols-2 gap-2">
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset-legend">Status</legend>
+                                            <select name="status" class="select outline-none w-full">
+                                                <% statusOptions.forEach(option=> { %>
+                                                    <option value="<%= option %>" <%=(game && game.status ? game.status
+                                                        : "owned" )===option ? "selected" : "" %>>
+                                                        <%= option %>
+                                                    </option>
+                                                    <% }) %>
+                                            </select>
+                                        </fieldset>
+
+                                        <fieldset class="fieldset">
+                                            <legend class="fieldset-legend">Price paid</legend>
+                                            <input type="number" name="price_paid" step="0.01" min="0"
+                                                class="input outline-none w-full [appearance:textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                                                value="<%= game && game.price_paid != null ? game.price_paid : '' %>" />
+                                        </fieldset>
+                                    </div>
+
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset-legend">Description</legend>
+                                        <textarea name="description" class="textarea resize-none w-full"
+                                            rows="2"><%= game && game.description ? game.description : '' %></textarea>
+                                    </fieldset>
+
+                                    <% if (isEdit) { %>
+                                    <fieldset class="fieldset">
+                                        <legend class="fieldset-legend">Password Protection</legend>
+                                        <input type="password" name="secret_password"
+                                            class="input outline-none w-full" />
+                                    </fieldset>
+                                    <% } %>
+
+                                    <button type="submit" class="btn btn-primary font-normal mt-2">
+                                        <%= isEdit ? "Save changes" : "Submit" %>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </section>
